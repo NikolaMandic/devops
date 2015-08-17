@@ -5,14 +5,38 @@
     max_clients: 200
   remote_user: root
   tasks:
+  - name: upgrade all packages
+    yum: name=* state=latest update_cache=yes
   - name: ensure apache is at the latest version
-    yum: pkg=httpd state=latest
-  - name: write the apache config file
-    template: src=/srv/httpd.j2 dest=/etc/httpd.conf
-    notify:
-    - restart apache
-  - name: ensure apache is running (and enable it at boot)
-    service: name=httpd state=started enabled=yes
-  handlers:
-    - name: restart apache
-      service: name=httpd state=restarted
+    yum: pkg=puppet,boost-devel,openssl-devel,yaml-cpp-devel,libblkid-devel,libcurl-devel,gcc-c++,make,wget,tar,git,ruby state=latest
+  - name: download foo.conf
+    git: repo=https://github.com/mirror/boost.git  dest=/root/boost
+  - name: download foo.conf
+    get_url: url=http://www.cmake.org/files/v3.2/cmake-3.2.3-Linux-x86_64.tar.gz dest=/root/cmake-3.2.3-Linux-x86_64.tar.gz
+  - name: download foo.conf
+    command: tar xzvf /root/cmake-3.2.3-Linux-x86_64.tar.gz --strip 1 -C /usr/local
+  - name: clone
+    git: repo=https://github.com/puppetlabs/facter.git dest=/root/facter
+  - name: Creates directory
+    file: path=/root/facter/release state=directory
+  - name: download foo.conf
+    command: cmake ..
+    args:
+      chdir: /root/facter/release
+  - name: download foo.conf
+    command: make
+    args:
+      chdir: /root/facter/release
+  - name: download foo.conf
+    command: make install
+    args:
+      chdir: /root/facter/release
+#  - name: write the apache config file
+#    template: src=/srv/httpd.j2 dest=/etc/httpd.conf
+#    notify:
+#    - restart apache
+#  - name: ensure apache is running (and enable it at boot)
+#    service: name=httpd state=started enabled=yes
+#  handlers:
+#    - name: restart apache
+#      service: name=httpd state=restarted
