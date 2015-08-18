@@ -6,21 +6,23 @@
   remote_user: root
   tasks:
   - name: upgrade all packages
+    yum: name=epel-release state=latest update_cache=yes
+  - name: upgrade all packages
     yum: name=* state=latest update_cache=yes
   - name: install all the internets
     yum: pkg=puppet,boost-devel,openssl-devel,yaml-cpp-devel,libblkid-devel,libcurl-devel,gcc-c++,make,wget,tar,git,ruby-devel,bzip2-devel,python-devel state=latest
-  - name: get boost
-    git: repo=https://github.com/mirror/boost.git  dest=/root/boost
-  - name: get cmake
+  - name: get icu
     get_url: url=http://download.icu-project.org/files/icu4c/51.2/icu4c-51_2-src.tgz dest=/root/icu.tgz
-  - name: untar cmake
+  - name: untar icu
     command: tar xzvf /root/icu.tgz
     args:
       chdir: /root
-  - name: untar cmake
+  - name: install icu
     shell: ./configure && make && make install 
     args:
       chdir: /root/icu/source
+  - name: get boost
+    git: repo=https://github.com/boostorg/boost  dest=/root/boost
   - name: run bootstrap boost
     shell: ./bootstrap.sh  --with-libraries=all 
     args:
@@ -45,11 +47,11 @@
     command: cmake ..
     args:
       chdir: /root/facter/release
-  - name: download foo.conf
+  - name: Make facter
     shell: make
     args:
       chdir: /root/facter/release
-  - name: download foo.conf
+  - name: Make facter install
     command: make install
     args:
       chdir: /root/facter/release
