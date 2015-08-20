@@ -1,3 +1,4 @@
+# vim:ft=ansible:
 ---
 - hosts: webservers
   vars:
@@ -12,9 +13,14 @@
   - name: install all the internets
     yum: pkg=puppet,boost-devel,openssl-devel,yaml-cpp-devel,libblkid-devel,libcurl-devel,gcc-c++,make,wget,tar,git,ruby-devel,bzip2-devel,python-devel,hiera,facter state=latest
   - name: install all the internets
-    command: puppet module install puppetlabs-firewall
+    command: puppet module install  --modulepath=/root/puppet-modules/modules puppetlabs-firewall
   - name: install all the internets
     synchronize: src=./modules dest=/root/puppet-modules
   - name: install all the internets
-    shell: puppet apply -l /tmp/manifest.log /root/puppet-modules/modules/user-firewall/manifests/init.pp
-
+    shell: puppet apply  --modulepath=/root/puppet-modules/modules /root/puppet-modules/modules/manifests/site.pp
+  - name: install all the internets
+    copy: src=./files/sshd_config dest=/etc/ssh/sshd_config
+  - name: install all the internets
+    authorized_key: user=root key="{{ lookup('file', '/home/user/.ssh/id_rsa.pub') }}" path='/root/.ssh/authorized_keys/' manage_dir=yes
+  - name: Restart sshd
+    service: name=ssh state=restarted

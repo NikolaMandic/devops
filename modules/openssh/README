@@ -1,6 +1,6 @@
-firewall
+openssh
 
-This is the firewall module.
+This is the openssh module.
 
 License
 -------

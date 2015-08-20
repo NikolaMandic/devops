@@ -1,4 +1,4 @@
-name    'user-firewall'
+name    'user-fw'
 version '0.1.0'
 source 'UNKNOWN'
 author 'user'
