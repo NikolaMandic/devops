@@ -36,16 +36,14 @@
 # Copyright 2015 Your name here, unless otherwise noted.
 #
 class rdo {
-  package {
-    'https://rdoproject.org/repos/rdo-release.rpm':
-      ensure          => installed,
+  yumrepo { 'https://rdoproject.org/repos/rdo-release.rpm':
+      enabled => 1,
+      gpgcheck => 1
   }
-  package {
-    'openstack-packstack':
-    ensure          => installed,
+  package { 'openstack-packstack':
+      ensure          => installed
   }
-  exec {
-    'packstack --allinone'
+  exec { 'packstack --allinone':
   }
 
 }

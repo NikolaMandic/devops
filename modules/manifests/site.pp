@@ -12,10 +12,14 @@ Firewall {
 
 include openssh
 node default {
+  class {'l23network':
+    use_ovs=>true
+  }
   #$interface='eth0'
   #include eth0tobridge
-class { ['eth0tobridge']: interface=>'eth0'}
-include rdo
-class { ['fw::pre', 'fw::post']: }
+
+  class { ['eth0tobridge']: interface=>'eth0'}
+  include rdo
+  class { ['fw::pre', 'fw::post']: }
 }
 
