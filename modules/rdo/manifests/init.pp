@@ -41,7 +41,7 @@ class rdo {
       ensure          => installed,
   }
   package {
-    'openstack-packstack'
+    'openstack-packstack':
     ensure          => installed,
   }
   exec {

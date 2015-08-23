@@ -11,7 +11,11 @@ Firewall {
 }
 
 include openssh
-include eth0tobridge
+node default {
+  #$interface='eth0'
+  #include eth0tobridge
+class { ['eth0tobridge']: interface=>'eth0'}
 include rdo
 class { ['fw::pre', 'fw::post']: }
+}
 

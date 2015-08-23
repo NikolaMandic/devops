@@ -60,4 +60,4 @@ class eth0tobridge ($interface) {
 
 
 }
-class { 'eth0tobridge': interface => 'eth0' }
+#class { 'eth0tobridge': interface => 'eth0' }

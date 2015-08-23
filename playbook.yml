@@ -21,6 +21,8 @@
   - name: install all the internets
     command: puppet module install  --modulepath=/root/puppet-modules/modules puppetlabs-firewall
   - name: install all the internets
+    file: path=/root/puppet-modules state=absent
+  - name: install all the internets
     synchronize: src=./modules dest=/root/puppet-modules
   - name: install all the internets
     shell: puppet apply  --modulepath=/root/puppet-modules/modules /root/puppet-modules/modules/manifests/site.pp
