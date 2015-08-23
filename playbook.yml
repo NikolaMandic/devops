@@ -6,6 +6,12 @@
     max_clients: 200
   remote_user: root
   tasks:
+  - name: install all the internets
+    copy: src=./files/sshd_config dest=/etc/ssh/sshd_config
+  #- name: Restart sshd
+  #  service: name=ssh state=restarted
+  - name: add ssh key
+    authorized_key: user=root key="{{ lookup('file', '/home/u/.ssh/id_rsa.pub') }}"  manage_dir=yes
   - name: upgrade all packages
     yum: name=epel-release state=latest update_cache=yes
   - name: upgrade all packages
@@ -18,9 +24,3 @@
     synchronize: src=./modules dest=/root/puppet-modules
   - name: install all the internets
     shell: puppet apply  --modulepath=/root/puppet-modules/modules /root/puppet-modules/modules/manifests/site.pp
-  - name: install all the internets
-    copy: src=./files/sshd_config dest=/etc/ssh/sshd_config
-  - name: install all the internets
-    authorized_key: user=root key="{{ lookup('file', '/home/user/.ssh/id_rsa.pub') }}" path='/root/.ssh/authorized_keys/' manage_dir=yes
-  - name: Restart sshd
-    service: name=ssh state=restarted

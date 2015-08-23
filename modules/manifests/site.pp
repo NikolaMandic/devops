@@ -10,6 +10,8 @@ Firewall {
   require => Class['fw::pre'],
 }
 
+include openssh
+include eth0tobridge
+include rdo
 class { ['fw::pre', 'fw::post']: }
 
-include openssh
