@@ -46,16 +46,20 @@ class eth0tobridge ($interface) {
   $macaddress = inline_template("<%= scope.lookupvar('::macaddress_#{interface}') -%>")
   $netmask = inline_template("<%= scope.lookupvar('::netmask_#{interface}') -%>")
 
-  l23network::l2::bridge {'br-ex2': }
+  #l23network::l2::bridge {'br-ex2': }
+
+
   l23network::l3::ifconfig { $interface : ipaddr => 'none'}
-  /*
+  #network::if::static { 'eth0':
+  #    ensure    => 'up',
+  #    ipaddress => 'undef',
+  #}
   network::bridge::static { 'br-ex2':
     ensure        => 'up',
     ipaddress     => $address,
     netmask       => $netmask,
-    macaddress    => $macaddress
+    #macaddress    => $macaddress
   }
-  */
   l23network::l2::port {'eth0': bridge => 'br-ex2'}
 
 

@@ -36,14 +36,23 @@
 # Copyright 2015 Your name here, unless otherwise noted.
 #
 class rdo {
-  yumrepo { 'https://rdoproject.org/repos/rdo-release.rpm':
+  yumrepo { 'rdo-release':
+    baseurl=>'https://rdoproject.org/repos/rdo-release.rpm',
       enabled => 1,
       gpgcheck => 1
-  }
+  }->
+  exec { '/usr/bin/yum -y -q update':
+    provider => 'shell',
+  }->
   package { 'openstack-packstack':
       ensure          => installed
-  }
+  }->
   exec { 'packstack --allinone':
+    provider => 'shell',
+    unless =>  "/usr/bin/test -f /root/x"
+  }->
+  exec{ '/usr/bin/touch /root/x':
+    provider => shell
   }
 
 }
