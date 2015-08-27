@@ -36,10 +36,8 @@
 # Copyright 2015 Your name here, unless otherwise noted.
 #
 class rdo {
-  yumrepo { 'rdo-release':
-    baseurl=>'https://rdoproject.org/repos/rdo-release.rpm',
-      enabled => 1,
-      gpgcheck => 1
+  exec { '/usr/bin/yum -y -q install https://rdoproject.org/repos/rdo-release.rpm':
+    provider => 'shell',
   }->
   exec { '/usr/bin/yum -y -q update':
     provider => 'shell',

@@ -26,3 +26,11 @@
     synchronize: src=./modules dest=/root/puppet-modules
   - name: install all the internets
     shell: puppet apply  --modulepath=/root/puppet-modules/modules /root/puppet-modules/modules/manifests/site.pp
+  - name: install repo
+    yum: name=https://rdoproject.org/repos/rdo-release.rpm
+  - name: upgrade all packages
+    yum: name=* state=latest update_cache=yes
+  - name: packstack
+    shell: packstack --allinone
+  - name: install all the internets
+    shell: puppet apply  --modulepath=/root/puppet-modules/modules /root/puppet-modules/modules/manifests/site.pp
