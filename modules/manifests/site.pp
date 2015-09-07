@@ -2,7 +2,7 @@
 
 # iptables purge
 resources { "firewall":
-  purge   => true
+  # purge   => true
 }
 
 Firewall {
@@ -12,8 +12,8 @@ Firewall {
 
 include openssh
 node default {
-  class{ 'rdo':
-  }->
+  # class{ 'rdo':
+  #}->
   class { ['fw::pre', 'fw::post']: }
   #class {'l23network':
   #  use_ovs=>true
