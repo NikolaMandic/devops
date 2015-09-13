@@ -1,0 +1,20 @@
+### Hetzner Online GmbH - installimage
+#
+# Note for customers who want to create bridged networking for virtualisation:
+# Gateway is set in separate file
+# Do not forget to change interface in file route-eth0 and rename this file
+#
+# device: eth0
+## Hetzner Online GmbH - installimage
+#
+# Note for customers who want to create bridged networking for virtualisation:
+# Gateway is set in separate file
+# Do not forget to change interface in file route-eth0 and rename this file
+#
+# device: eth0
+DEVICE=eth0
+BOOTPROTO=static
+ONBOOT=yes
+HWADDR=D4:3D:7E:ED:0A:56
+IPADDR=46.4.83.143
+BRIDGE=br0

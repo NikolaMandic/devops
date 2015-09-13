@@ -1,0 +1,16 @@
+# vim:ft=ansible:
+---
+- hosts: webservers
+  vars:
+    http_port: 80
+    max_clients: 200
+  remote_user: root
+  tasks:
+  - name: upgrade all packages
+    shell: yum update -y
+  - name: upgrade all packages
+    shell: yum install -y https://rdoproject.org/repos/rdo-release.rpm
+  - name: upgrade all packages
+    shell: yum install -y openstack-packstack
+  #- name: upgrade all packages
+  #  shell: packstack --allinone

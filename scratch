@@ -1,0 +1,23 @@
+
+  - name: upgrade all packages
+    yum: name=epel-release state=latest update_cache=yes
+  - name: upgrade all packages
+    yum: name=* state=latest update_cache=yes
+  - name: install all the internets
+    yum: pkg=puppet,boost-devel,openssl-devel,yaml-cpp-devel,libblkid-devel,libcurl-devel,gcc-c++,make,wget,tar,git,ruby-devel,bzip2-devel,python-devel,hiera,facter state=latest
+  - name: install all the internets
+    command: puppet module install  --modulepath=/root/puppet-modules/modules puppetlabs-firewall
+  - name: install all the internets
+    file: path=/root/puppet-modules state=absent
+  - name: install all the internets
+    synchronize: src=./modules dest=/root/puppet-modules
+  - name: install all the internets
+    shell: puppet apply  --modulepath=/root/puppet-modules/modules /root/puppet-modules/modules/manifests/site.pp
+  - name: install repo
+    yum: name=https://rdoproject.org/repos/rdo-release.rpm
+  - name: upgrade all packages
+    yum: name=* state=latest update_cache=yes
+  - name: packstack
+    shell: packstack --allinone
+  - name: install all the internets
+    shell: puppet apply  --modulepath=/root/puppet-modules/modules /root/puppet-modules/modules/manifests/site.pp

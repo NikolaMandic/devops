@@ -1,0 +1,37 @@
+# vim:ft=ansible:
+---
+- hosts: webservers
+  vars:
+    http_port: 80
+    max_clients: 200
+  remote_user: root
+  tasks:
+    #- name: upgrade all packages
+    #  shell: ip link add dev vm1 type veth peer name vm2
+    #; ip link set dev vm1 up; ip tuntap add tapm mode tap;ip link set dev tapm up; ip link add brm type bridge
+  #- name: upgrade all packages
+  #  shell: yum update -y; yum install -y https://rdoproject.org/repos/rdo-release.rpm; yum install -y openstack-packstack; packstack --allinone
+  - name: upgrade all packages
+    shell: ovs-vsctl add-port br-int vm1
+  - name: upgrade all packages
+    shell: ip link set vm2 master br0
+  - name: upgrade all packages
+    shell: ip link set dev vm1 up
+  - name: upgrade all packages
+    shell: ip link set dev vm2 up
+
+  - name: add veth to br int port
+    shell: ovs-vsctl add-port br-int vm11
+  - name: upgrade all packages
+    shell: ip link set vm12 master br0
+  - name: upgrade all packages
+    shell: ip link set dev vm11 up
+  - name: upgrade all packages
+    shell: ip link set dev vm12 up
+
+  - name: add pub gateway to br ex
+    shell: ip address add 172.24.4.225/28 dev br-ex
+  - name:  add gateway address to br int
+    shell: ip address add 10.0.0.1/28 dev br-int
+  - name: add route
+    shell: ip route add 10.0.0.0/28 via 10.0.0.1

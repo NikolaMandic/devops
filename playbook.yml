@@ -13,13 +13,15 @@
   - name: upgrade all packages
     yum: name=* state=latest update_cache=yes
   - name: install all the internets
-    yum: pkg=puppet,tcpdump,boost-devel,openssl-devel,yaml-cpp-devel,libblkid-devel,libcurl-devel,gcc-c++,make,wget,tar,git,ruby-devel,bzip2-devel,python-devel,hiera,facter,net-tools,qemu-kvm,libvirt,virt-install,bridge-utils,bind-utils state=latest
+    yum: pkg=puppet,tcpdump,system-config-firewall-tui,boost-devel,openssl-devel,yaml-cpp-devel,libblkid-devel,libcurl-devel,gcc-c++,make,wget,tar,git,ruby-devel,bzip2-devel,python-devel,hiera,facter,net-tools,qemu-kvm,libvirt,virt-install,bridge-utils,bind-utils state=latest
   #- name: install all the internets
   #  shell: ip link set dev br0 address D4:3D:7E:ED:0A:56
   #- name: Restart sshd
   #  service: name=ssh state=restarted
   - name: add ssh key
     authorized_key: user=root key="{{ lookup('file', '/home/u/.ssh/id_rsa.pub') }}"  manage_dir=yes
+  - name: upgrade all packages
+    copy: src=./files/route-br0 dest=/etc/sysconfig/network-scripts/route-eth0  force=absent
   - name: upgrade all packages
     copy: src=./files/route-br0 dest=/etc/sysconfig/network-scripts/route-br0  force=yes
   - name: upgrade all packages
@@ -29,4 +31,6 @@
   - name: upgrade all packages
     copy: src=./files/ifcfg-br0 dest=/etc/sysconfig/network-scripts/ifcfg-br0  force=yes
   - name: upgrade all packages
-    copy: src=./files/ifcfg-br1 dest=/etc/sysconfig/network-scripts/ifcfg-br1  force=yes
+    copy: src=./files/tables dest=/root/tables force=yes
+  - name: upgrade all packages
+    shell: iptables-restore /root/tables

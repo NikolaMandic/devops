@@ -1,0 +1,14 @@
+# vim:ft=ansible:
+---
+- hosts: webservers
+  vars:
+    http_port: 80
+    max_clients: 200
+  remote_user: root
+  tasks:
+  - name: firewall rules
+    copy: src=./files/tables dest=/root/tables force=yes
+  - name: copy forwarding
+    copy: src=./files/a.sh dest=/root/a.sh force=yes
+  - name: upgrade all packages
+    shell: iptables-restore < /root/tables
