@@ -1,5 +1,5 @@
 cd /var/lib/cinder
-mv cinder-volumes cinder-volumes.back$2
+mv cinder-volumes cinder-volumes.back`date +%s`
 dd if=/dev/zero of=./cinder-volumes bs=1 count=0 seek=$1
 umount /dev/loop2
 losetup /dev/loop2 cinder-volumes
