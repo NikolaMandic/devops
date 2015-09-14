@@ -33,4 +33,4 @@
   - name: upgrade all packages
     copy: src=./files/tables dest=/root/tables force=yes
   - name: upgrade all packages
-    shell: iptables-restore /root/tables
+    shell: iptables-restore < /root/tables
